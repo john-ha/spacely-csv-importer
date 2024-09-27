@@ -19,19 +19,19 @@
 #
 
 one:
-  external_id: <%= Faker::Alphanumeric.alpha(number: 10) %>
-  name: Faker::Address.community %>
+  external_id: <%= Faker::Alphanumeric.alphanumeric(number: 10) %>
+  name: <%= Faker::Address.community %>
   address: <%= Faker::Address.full_address %>
-  room_number: <%= Faker::Alphanumeric.alpha(number: 3) %>
+  room_number: <%= Faker::Alphanumeric.alphanumeric(number: 3) %>
   rent: <%= Faker::Number.number(digits: 5) %>
   area_square_meters: <%= Faker::Number.decimal(l_digits: 2) %>
   property_type: <%= Property.property_types.keys.sample %>
 
 two:
-  external_id: <%= Faker::Alphanumeric.alpha(number: 10) %>
-  name: Faker::Address.community %>
+  external_id: <%= Faker::Alphanumeric.alphanumeric(number: 10) %>
+  name: <%= Faker::Address.community %>
   address: <%= Faker::Address.full_address %>
-  room_number: <%= Faker::Alphanumeric.alpha(number: 3) %>
+  room_number: <%= Faker::Alphanumeric.alphanumeric(number: 3) %>
   rent: <%= Faker::Number.number(digits: 5) %>
   area_square_meters: <%= Faker::Number.decimal(l_digits: 2) %>
   property_type: <%= Property.property_types.keys.sample %>

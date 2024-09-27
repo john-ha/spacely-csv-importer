@@ -1,4 +1,38 @@
-<div>
-  <h1 class="font-bold text-4xl">Imports#show</h1>
-  <p>Find me in app/views/imports/show.html.erb</p>
+<div class="px-4 sm:px-6 lg:px-8">
+  <div class="sm:flex sm:items-center">
+    <div class="sm:flex-auto">
+      <h1 class="text-base font-semibold leading-6 text-gray-900">Properties of import #<%= @import_history.id %> (<%= @import_history.imported_at %>)</h1>
+      <p class="mt-2 text-sm text-gray-700">All the properties that have been imported.</p>
+    </div>
+  </div>
+  <div class="mt-8 flow-root">
+    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+        <table class="min-w-full divide-y divide-gray-300">
+          <thead>
+            <tr>
+              <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">External ID</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Name</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Full Address</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Area (in m²)</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Rent</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Property Type</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            <% @properties.each do |property| %>
+              <tr>
+                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"><%= property.external_id %></td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= property.name %></td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= property.full_address %></td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= property.area_square_meters %></td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= property.rent %></td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= property.property_type %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

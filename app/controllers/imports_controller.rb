@@ -12,6 +12,8 @@ class ImportsController < ApplicationController
   end
 
   def show
+    @import_history = ImportHistory.find(params[:import_history_id]).decorate
+    @properties = @import_history.properties.decorate
   end
 
   def upload
