@@ -54,6 +54,12 @@ gem "bootsnap", require: false
 # Decorate the models for use in the views [https://github.com/drapergem/draper]
 gem "draper", "~> 4.0", ">= 4.0.2"
 
+# DB-based queueing backend for Active Job [https://github.com/rails/solid_queue]
+gem "solid_queue", "~> 1.0"
+
+# Bulk update or insert records in the database [https://github.com/zdennis/activerecord-import]
+gem "activerecord-import", "~> 1.8"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[mri mingw x64_mingw]

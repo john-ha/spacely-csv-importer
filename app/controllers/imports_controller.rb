@@ -17,5 +17,14 @@ class ImportsController < ApplicationController
   end
 
   def upload
+    Imports::UploadService.call(file: params[:file])
+
+    redirect_to imports_index_path
+  end
+
+  def download_error_file
+    import_history = ImportHistory.find(params[:import_history_id])
+
+    send_data import_history.imported_file_with_errors.download, filename: "import_errors_#{import_history.id}.csv"
   end
 end

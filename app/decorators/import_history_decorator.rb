@@ -9,4 +9,27 @@ class ImportHistoryDecorator < ApplicationDecorator
   #       object.created_at.strftime("%a %m/%d/%y")
   #     end
   #   end
+
+  def import_status
+    object.import_status.humanize
+  end
+
+  def import_status_color
+    case object.import_status.to_sym
+    when :in_progress
+      "blue"
+    when :completed
+      "green"
+    when :failed
+      "red"
+    end
+  end
+
+  def import_error_message
+    if object.import_failure_type.present?
+      object.import_failure_type.humanize
+    else
+
+    end
+  end
 end

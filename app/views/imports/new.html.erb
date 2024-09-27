@@ -15,9 +15,9 @@
           </svg>
           <div data-file-upload-target="filename" class="text-xl font-semibold text-gray-400"></div>
           <div class="mt-4 flex justify-center text-sm leading-6 text-gray-600">
-            <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-semibold text-pink-600 hover:text-pink-500">
+            <label for="file" class="relative cursor-pointer rounded-md bg-white font-semibold text-pink-600 hover:text-pink-500">
               <span>Upload a file</span>
-              <%= file_field_tag "file-upload", accept: ".csv", class: "sr-only", data: { file_upload_target: "input", action: "change->file-upload#onInputChange" } %>
+              <%= file_field_tag :file, accept: ".csv", class: "sr-only", data: { file_upload_target: "input", action: "change->file-upload#onInputChange" } %>
             </label>
           </div>
           <p class="text-xs leading-5 text-gray-600">CSV up to 10MB</p>

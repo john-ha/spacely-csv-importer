@@ -4,7 +4,8 @@ Rails.application.routes.draw do
 
   get "imports/index"
   get "imports/new"
-  get "imports/show/:import_history_id", to: "imports#show", as: "imports_show"
+  get "imports/:import_history_id", to: "imports#show", as: "imports_show"
+  get "imports/:import_history_id/error_file", to: "imports#download_error_file", as: "imports_download_error_file"
 
   post "imports/upload"
 end

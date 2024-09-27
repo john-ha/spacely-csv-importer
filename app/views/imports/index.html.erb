@@ -17,6 +17,8 @@
               <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Import Code</th>
               <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Imported Properties Count</th>
               <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Imported At</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Details</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200">
@@ -25,6 +27,19 @@
                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"><%= import_history.id %></td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= import_history.imported_properties_count %></td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= import_history.imported_at %></td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <span class="<%= "inline-flex items-center rounded-md bg-#{import_history.import_status_color}-50 px-2 py-1 text-xs font-medium text-#{import_history.import_status_color}-700 ring-1 ring-inset ring-#{import_history.import_status_color}-600/20" %>">
+                    <%= import_history.import_status %>
+                  </span>
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <span class="text-red-600"><%= import_history.import_error_message %></span>
+                  <% if import_history.imported_file_with_errors.attached? %>
+                    <div>
+                      <%= link_to "Download error report", imports_download_error_file_path(import_history.id), class: "text-pink-600 hover:text-pink-900" %>
+                    </div>
+                  <% end %>
+                </td>
                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                   <%= link_to "Show", imports_show_path(import_history_id: import_history.id), class: "text-pink-600 hover:text-pink-900" %>
                 </td>
