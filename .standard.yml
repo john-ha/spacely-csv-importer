@@ -1,3 +1,4 @@
 ignore:
   - 'lib/tasks/auto_annotate_models.rake'
   - 'config/environments/*.rb'
+  - 'db/migrate/*.rb'
