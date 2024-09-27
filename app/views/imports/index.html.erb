@@ -36,12 +36,14 @@
                   <span class="text-red-600"><%= import_history.import_error_message %></span>
                   <% if import_history.imported_file_with_errors.attached? %>
                     <div>
-                      <%= link_to "Download error report", imports_download_error_file_path(import_history.id), class: "text-pink-600 hover:text-pink-900" %>
+                      <%= link_to "Download error report", imports_download_error_file_path(import_history_id: import_history.id), class: "text-pink-600 hover:text-pink-900" %>
                     </div>
                   <% end %>
                 </td>
                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                   <%= link_to "Show", imports_show_path(import_history_id: import_history.id), class: "text-pink-600 hover:text-pink-900" %>
+                  <%= link_to "Original file", imports_download_original_file_path(import_history_id: import_history.id), class: "text-pink-600 hover:text-pink-900" %>
+
                 </td>
               </tr>
             <% end %>

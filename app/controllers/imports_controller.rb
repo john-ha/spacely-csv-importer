@@ -27,4 +27,10 @@ class ImportsController < ApplicationController
 
     send_data import_history.imported_file_with_errors.download, filename: "import_errors_#{import_history.id}.csv"
   end
+
+  def download_original_file
+    import_history = ImportHistory.find(params[:import_history_id])
+
+    send_data import_history.imported_file.download, filename: "import_#{import_history.id}.csv"
+  end
 end

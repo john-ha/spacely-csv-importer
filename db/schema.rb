@@ -51,7 +51,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_27_143916) do
     t.integer "import_failure_type"
   end
 
-  create_table "import_histories_properties", id: false, force: :cascade do |t|
+  create_table "import_histories_properties", force: :cascade do |t|
     t.bigint "import_history_id", null: false
     t.bigint "property_id", null: false
     t.datetime "created_at", null: false
@@ -197,6 +197,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_27_143916) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "import_histories_properties", "import_histories"
+  add_foreign_key "import_histories_properties", "properties"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_failed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade

@@ -21,6 +21,7 @@ class Property < ApplicationRecord
   enum :property_type, {appartment: 0, mansion: 1, house: 2}, prefix: true
 
   has_many :import_histories_properties, dependent: :destroy
+  accepts_nested_attributes_for :import_histories_properties
   has_many :import_histories, through: :import_histories_properties
 
   validates :external_id, presence: true

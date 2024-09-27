@@ -28,8 +28,6 @@ class ImportHistoryDecorator < ApplicationDecorator
   def import_error_message
     if object.import_failure_type.present?
       object.import_failure_type.humanize
-    else
-
     end
   end
 end
