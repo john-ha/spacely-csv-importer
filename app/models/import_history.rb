@@ -10,12 +10,12 @@
 #  updated_at                :datetime         not null
 #
 class ImportHistory < ApplicationRecord
-  has_many :import_history_properties, dependent: :destroy
-  has_many :properties, through: :import_history_properties
+  has_many :import_histories_properties, dependent: :destroy
+  has_many :properties, through: :import_histories_properties
 
   has_one_attached :imported_file
 
-  enum import_status: {in_progress: 0, success: 1, failed: 2}
+  enum :import_status, {in_progress: 0, success: 1, failed: 2}, prefix: true
 
   validates :import_status, presence: true
   validates :imported_at, presence: true

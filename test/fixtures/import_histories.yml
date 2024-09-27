@@ -11,9 +11,11 @@
 #
 
 one:
-  import_status: 1
-  imported_properties_count: 1
+  import_status: <%= ImportHistory.import_statuses.keys.sample %>
+  imported_properties_count: <%= Faker::Number.number(digits: 2) %>
+  imported_at: <%= Faker::Date.between(from: 2.days.ago, to: Date.today) %>
 
 two:
-  import_status: 1
-  imported_properties_count: 1
+  import_status: <%= ImportHistory.import_statuses.keys.sample %>
+  imported_properties_count: <%= Faker::Number.number(digits: 2) %>
+  imported_at: <%= Faker::Date.between(from: 2.days.ago, to: Date.today) %>
