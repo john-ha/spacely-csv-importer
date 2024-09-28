@@ -3,6 +3,7 @@ module Imports
     include Callable
 
     class InvalidFileFormatError < StandardError; end
+
     class FileSizeExceededError < StandardError; end
 
     MAX_FILE_SIZE = 10.megabytes.freeze
@@ -15,8 +16,6 @@ module Imports
     end
 
     def call
-      binding.irb
-
       raise InvalidFileFormatError unless @file.content_type == "text/csv"
       raise FileSizeExceededError if @file.size > MAX_FILE_SIZE
 

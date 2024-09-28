@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "ViewImportedProperties", type: :system do
   let!(:import_history) { create(:import_history, :with_properties) }

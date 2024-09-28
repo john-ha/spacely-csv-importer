@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe Imports::UploadService, type: :service do
   describe "#call" do
-
     before do
       allow(ImportPropertiesJob).to receive(:perform_later).and_call_original
     end

@@ -1,0 +1,69 @@
+name: CI
+
+on: [push]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: spacely_csv_importer_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    env:
+      USER: postgres
+      RAILS_ENV: test
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/spacely_csv_importer_test
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ".ruby-version"
+    - name: Install dependencies
+      run: |
+        gem install bundler
+        bundle install
+    - name: Precompile assets (for system tests)
+      run: bundle exec rake assets:precompile
+    - name: Run Standard linter
+      run: bundle exec standardrb
+    - name: Setup database
+      env:
+        RAILS_ENV: test
+      run: |
+        bundle exec rake db:create
+        bundle exec rake db:schema:load
+    - name: Run tests
+      run: |
+        bundle exec rspec spec
+    - name: Save screenshots from failed tests
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: screenshots
+        path: ${{ github.workspace }}/tmp/capybara
+        if-no-files-found: ignore
+
+  cd:
+    runs-on: ubuntu-latest
+    needs: ci
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Deploy to Render
+        env:
+          render_deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          curl "$render_deploy_url"
