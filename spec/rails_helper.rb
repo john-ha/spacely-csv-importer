@@ -69,9 +69,39 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 end
 
+########################
+### Shoulda Matchers ###
+########################
+
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
     with.test_framework :rspec
     with.library :rails
   end
 end
+
+############################
+### Capybara with Chrome ###
+############################
+
+Capybara.register_driver :selenium_chrome_headless do |app|
+  browser_options = ::Selenium::WebDriver::Chrome::Options.new
+  browser_options.args << "--headless"
+
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
+end
+
+#######################
+### Custom matchers ###
+#######################
+
+# https://zenn.dev/kanazawa/articles/26a4d2ec34646f
+RSpec::Matchers.define_negated_matcher :not_change, :change
+
+#################
+### SimpleCov ###
+#################
+
+require "simplecov"
+
+SimpleCov.start :rails
