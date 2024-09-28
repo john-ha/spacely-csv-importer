@@ -36,6 +36,8 @@ jobs:
       run: |
         gem install bundler
         bundle install
+    - name: Precompile assets (for system tests)
+      run: bundle exec rake assets:precompile
     - name: Run Standard linter
       run: bundle exec standardrb
     - name: Setup database
