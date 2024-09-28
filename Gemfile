@@ -13,8 +13,7 @@ gem "sprockets-rails"
 gem "pg", "~> 1.1"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 5.0"
-
+gem "puma", "~> 6.4", ">= 6.4.3"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
 
@@ -55,7 +54,7 @@ gem "bootsnap", require: false
 gem "draper", "~> 4.0", ">= 4.0.2"
 
 # DB-based queueing backend for Active Job [https://github.com/rails/solid_queue]
-gem "solid_queue", "~> 1.0"
+gem "solid_queue", "~> 0.9.0"
 
 # Bulk update or insert records in the database [https://github.com/zdennis/activerecord-import]
 gem "activerecord-import", "~> 1.8"
@@ -72,6 +71,9 @@ group :development, :test do
 
   # Fixture replacement for focused and readable tests [https://github.com/thoughtbot/factory_bot]
   gem "factory_bot_rails", "~> 6.4", ">= 6.4.3"
+
+  # Load environment variables from .env into ENV in development [https://github.com/bkeepers/dotenv]
+  gem "dotenv", "~> 3.1", ">= 3.1.4"
 end
 
 group :development do

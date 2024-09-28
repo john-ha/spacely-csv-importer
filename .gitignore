@@ -35,3 +35,6 @@
 
 # Ignore generated coverage report
 /coverage/*
+
+# Ignore environment files
+.env.local
