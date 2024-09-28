@@ -1,6 +1,12 @@
 class ImportHistoryDecorator < ApplicationDecorator
   delegate_all
 
+  IMPORT_STATUS_COLORS = {
+    in_progress: "blue",
+    completed: "green",
+    failed: "red"
+  }.freeze
+
   # Define presentation-specific methods here. Helpers are accessed through
   # `helpers` (aka `h`). You can override attributes, for example:
   #
@@ -15,14 +21,7 @@ class ImportHistoryDecorator < ApplicationDecorator
   end
 
   def import_status_color
-    case object.import_status.to_sym
-    when :in_progress
-      "blue"
-    when :completed
-      "green"
-    when :failed
-      "red"
-    end
+    IMPORT_STATUS_COLORS[object.import_status.to_sym]
   end
 
   def import_error_message

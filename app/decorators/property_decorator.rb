@@ -15,11 +15,11 @@ class PropertyDecorator < ApplicationDecorator
   end
 
   def area_square_meters
-    "#{object.area_square_meters} m²"
+    "#{object.area_square_meters} m²" if object.area_square_meters.present?
   end
 
   def rent
-    "#{object.rent} 円"
+    "#{object.rent} 円" if object.rent.present?
   end
 
   def property_type
