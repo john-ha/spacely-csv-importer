@@ -3,6 +3,7 @@ module Imports
     include Callable
 
     class InvalidFileFormatError < StandardError; end
+
     class FileSizeExceededError < StandardError; end
 
     MAX_FILE_SIZE = 10.megabytes.freeze
