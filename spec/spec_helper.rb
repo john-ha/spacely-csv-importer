@@ -99,3 +99,11 @@ end
 
 # https://zenn.dev/kanazawa/articles/26a4d2ec34646f
 RSpec::Matchers.define_negated_matcher :not_change, :change
+
+#################
+### SimpleCov ###
+#################
+
+require "simplecov"
+
+SimpleCov.start :rails

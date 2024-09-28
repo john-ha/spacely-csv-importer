@@ -98,4 +98,7 @@ group :test do
 
   # Provides one-liners to test common Rails functionality [https://github.com/thoughtbot/shoulda-matchers]
   gem "shoulda-matchers", "~> 6.4"
+
+  # Provides code coverage for Ruby [https://github.com/simplecov-ruby/simplecov]
+  gem "simplecov", "~> 0.22.0"
 end
