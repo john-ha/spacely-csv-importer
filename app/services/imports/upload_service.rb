@@ -16,8 +16,6 @@ module Imports
     end
 
     def call
-      binding.irb
-
       raise InvalidFileFormatError unless @file.content_type == "text/csv"
       raise FileSizeExceededError if @file.size > MAX_FILE_SIZE
 
