@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe PropertyDecorator, type: :decorator do
   describe "#full_address" do
-    let(:property) { create(:property, address:, room_number:) }
+    let(:property) { create(:property, address:, property_type: :house, room_number:) }
 
     context "when :address and :room_number are present" do
       let(:address) { "Toulouse" }
