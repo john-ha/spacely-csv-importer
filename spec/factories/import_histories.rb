@@ -10,13 +10,11 @@
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
 #
-
-one:
-  import_status: <%= ImportHistory.import_statuses.keys.sample %>
-  imported_properties_count: <%= Faker::Number.number(digits: 2) %>
-  imported_at: <%= Faker::Date.between(from: 2.days.ago, to: Date.today) %>
-
-two:
-  import_status: <%= ImportHistory.import_statuses.keys.sample %>
-  imported_properties_count: <%= Faker::Number.number(digits: 2) %>
-  imported_at: <%= Faker::Date.between(from: 2.days.ago, to: Date.today) %>
+FactoryBot.define do
+  factory :import_history do
+    import_failure_type { ImportHistory.import_failure_types.keys.sample }
+    import_status { ImportHistory.import_statuses.keys.sample }
+    imported_at { Faker::Time.backward(days: 14) }
+    imported_properties_count { Faker::Number.number(digits: 3) }
+  end
+end

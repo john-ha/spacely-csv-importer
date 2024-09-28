@@ -66,6 +66,12 @@ group :development, :test do
 
   # Generate fake data for seeding and testing [https://github.com/faker-ruby/faker]
   gem "faker", "~> 3.4", ">= 3.4.2"
+
+  # RSpec testing framework [https://github.com/rspec/rspec-rails]
+  gem "rspec-rails", "~> 7.0.0"
+
+  # Fixture replacement for focused and readable tests [https://github.com/thoughtbot/factory_bot]
+  gem "factory_bot_rails", "~> 6.4", ">= 6.4.3"
 end
 
 group :development do
@@ -89,4 +95,7 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+
+  # Provides one-liners to test common Rails functionality [https://github.com/thoughtbot/shoulda-matchers]
+  gem "shoulda-matchers", "~> 6.4"
 end

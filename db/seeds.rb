@@ -6,4 +6,16 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-system("bin/rails db:fixtures:load")
+require "factory_bot_rails"
+
+properties = FactoryBot.create_list(:property, 10)
+
+completed_import_histories = FactoryBot.create_list(:import_history, 3, import_status: :completed)
+_in_progress_import_histories = FactoryBot.create_list(:import_history, 5, import_status: :in_progress)
+_failed_import_histories = FactoryBot.create_list(:import_history, 2, import_status: :failed)
+
+completed_import_histories.each do |import_history|
+  properties.sample(5).each do |property|
+    FactoryBot.create(:import_histories_property, import_history:, property:)
+  end
+end

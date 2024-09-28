@@ -19,16 +19,9 @@
 #  fk_rails_...  (import_history_id => import_histories.id)
 #  fk_rails_...  (property_id => properties.id)
 #
-
-# This model initially had no columns defined. If you add columns to the
-# model remove the "{}" from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
-
-one:
-  import_history: one
-  property: one
-
-two:
-  import_history: two
-  property: two
+FactoryBot.define do
+  factory :import_histories_property do
+    import_history
+    property
+  end
+end

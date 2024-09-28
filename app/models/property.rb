@@ -27,6 +27,5 @@ class Property < ApplicationRecord
   validates :external_id, presence: true
   validates :name, presence: true
   validates :property_type, presence: true
-
   validates :room_number, presence: true, if: -> { property_type_appartment? || property_type_mansion? }
 end
