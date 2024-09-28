@@ -1,0 +1,51 @@
+name: CI
+
+on: [push]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: spacely_csv_importer_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    env:
+      USER: postgres
+      RAILS_ENV: test
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/spacely_csv_importer_test
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ".ruby-version"
+    - name: Install dependencies
+      run: |
+        gem install bundler
+        bundle install
+    - name: Run Standard linter
+      run: bundle exec standardrb
+    - name: Setup database
+      env:
+        RAILS_ENV: test
+      run: |
+        bundle exec rake db:create
+        bundle exec rake db:schema:load
+    - name: Run tests
+      run: |
+        bundle exec rspec spec
+    - name: Report to Coveralls
+      uses: coverallsapp/github-action@v2.3.0
