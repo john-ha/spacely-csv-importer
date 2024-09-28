@@ -14,6 +14,7 @@ gem "pg", "~> 1.1"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 6.4", ">= 6.4.3"
+
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
 
@@ -58,6 +59,9 @@ gem "solid_queue", "~> 0.9.0"
 
 # Bulk update or insert records in the database [https://github.com/zdennis/activerecord-import]
 gem "activerecord-import", "~> 1.8"
+
+# Use Amazon S3 for Active Storage [https://github.com/aws/aws-sdk-ruby]
+gem "aws-sdk-s3", "~> 1.166"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
