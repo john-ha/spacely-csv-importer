@@ -81,6 +81,7 @@ test:
 #
 production:
   <<: *default
-  database: spacely_csv_importer_production
-  username: spacely_csv_importer
-  password: <%= ENV["SPACELY_CSV_IMPORTER_DATABASE_PASSWORD"] %>
+  host: <%= ENV["SUPABASE_DATABASE_HOST"] %>
+  database: <%= ENV["SUPABASE_DATABASE_NAME"] %>
+  username: <%= ENV["SUPABASE_DATABASE_USER"] %>
+  password: <%= ENV["SUPABASE_DATABASE_PASSWORD"] %>
