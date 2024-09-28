@@ -49,8 +49,6 @@ jobs:
     - name: Run tests
       run: |
         bundle exec rspec spec
-    - name: Report to Coveralls
-      uses: coverallsapp/github-action@v2.3.0
     - name: Save screenshots from failed tests
       uses: actions/upload-artifact@v4
       if: failure()
