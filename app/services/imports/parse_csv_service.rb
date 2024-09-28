@@ -41,7 +41,7 @@ module Imports
     end
 
     def call
-      return if @import_history.import_status_completed?
+      return unless @import_history.import_status_in_progress?
 
       ActiveRecord::Base.transaction do
         @import_history.imported_file.open do |file|

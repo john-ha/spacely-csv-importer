@@ -2,8 +2,6 @@ module Imports
   class UploadService
     include Callable
 
-    attr_reader :file
-
     # Initialize the service with the file to be uploaded
     # @param [ActionDispatch::Http::UploadedFile] file
     # @return [void]

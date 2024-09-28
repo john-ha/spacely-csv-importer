@@ -92,3 +92,10 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 end
+
+#######################
+### Custom matchers ###
+#######################
+
+# https://zenn.dev/kanazawa/articles/26a4d2ec34646f
+RSpec::Matchers.define_negated_matcher :not_change, :change

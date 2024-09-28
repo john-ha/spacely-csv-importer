@@ -10,6 +10,6 @@ class ImportPropertiesJob < ApplicationJob
   def perform(import_history_id)
     import_history = ImportHistory.find(import_history_id)
 
-    Imports::ParseCsvService.new(import_history:).call
+    Imports::ParseCsvService.call(import_history:)
   end
 end
