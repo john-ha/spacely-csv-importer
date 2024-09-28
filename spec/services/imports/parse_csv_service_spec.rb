@@ -5,7 +5,7 @@ RSpec.describe Imports::ParseCsvService, type: :service do
     let(:import_history) { create(:import_history, import_status:, imported_file:) }
 
     context "when the file contains only valid data" do
-      let(:import_status) { :in_progress }
+      let(:import_status) { :started }
       let(:imported_file) { fixture_file_upload("valid_data.csv", "text/csv") }
 
       it "creates Properties" do
@@ -57,7 +57,7 @@ RSpec.describe Imports::ParseCsvService, type: :service do
     end
 
     context "when the file contains invalid data" do
-      let(:import_status) { :in_progress }
+      let(:import_status) { :started }
       let(:imported_file) { fixture_file_upload("invalid_rows_data.csv", "text/csv") }
 
       it "updates ImportHistory status to :failed" do
@@ -74,7 +74,7 @@ RSpec.describe Imports::ParseCsvService, type: :service do
     end
 
     context "when the file contains invalid headers" do
-      let(:import_status) { :in_progress }
+      let(:import_status) { :started }
       let(:imported_file) { fixture_file_upload("invalid_headers_data.csv", "text/csv") }
 
       it "updates ImportHistory status to :failed" do
@@ -90,7 +90,7 @@ RSpec.describe Imports::ParseCsvService, type: :service do
     end
 
     context "when an unexpected error occurs" do
-      let(:import_status) { :in_progress }
+      let(:import_status) { :started }
       let(:imported_file) { fixture_file_upload("valid_data.csv", "text/csv") }
 
       before do
@@ -109,7 +109,7 @@ RSpec.describe Imports::ParseCsvService, type: :service do
       end
     end
 
-    context "when ImportHistory status is other than :in_progress" do
+    context "when ImportHistory status is other than :started" do
       shared_examples "returns and does not create any records" do
         it do
           expect { described_class.call(import_history:) }

@@ -38,3 +38,4 @@
 
 # Ignore environment files
 .env.local
+**/.env
