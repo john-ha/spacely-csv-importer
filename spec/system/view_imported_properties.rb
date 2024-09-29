@@ -8,7 +8,7 @@ RSpec.describe "ViewImportedProperties", type: :system do
     driven_by(:selenium_chrome_headless)
   end
 
-  it "starts the import of properties" do
+  it "shows all the imported properties for an import history" do
     visit imports_index_path
 
     expect(page).to have_selector("#import-histories tbody tr", count: 1)

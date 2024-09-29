@@ -6,6 +6,9 @@ module ExceptionHandler
   extend ActiveSupport::Concern
   included do
     rescue_from StandardError do |e|
+      Rails.logger.error "[StandardError] #{e.message}"
+      Rails.logger.error "[StandardError] #{e.backtrace.join("\n")}"
+
       respond_to do |format|
         format.html do
           flash[:error] = e.message
