@@ -24,9 +24,7 @@ class ImportHistoryDecorator < ApplicationDecorator
     IMPORT_STATUS_COLORS[object.import_status.to_sym]
   end
 
-  def import_error_message
-    if object.import_failure_type.present?
-      object.import_failure_type.humanize
-    end
+  def import_failure_type
+    object.import_failure_type&.humanize
   end
 end

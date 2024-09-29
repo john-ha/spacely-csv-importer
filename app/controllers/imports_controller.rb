@@ -1,4 +1,6 @@
 class ImportsController < ApplicationController
+  protect_from_forgery with: :null_session, if: -> { request.format.json? }
+
   # GET /imports
   # GET /imports.json
   def index
@@ -33,10 +35,14 @@ class ImportsController < ApplicationController
   end
 
   # POST /imports/upload
+  # POST /imports/upload.json
   def upload
     Imports::UploadService.call(file: params[:file])
 
-    redirect_to imports_index_path
+    respond_to do |format|
+      format.html { redirect_to imports_index_path }
+      format.json { render json: {}, status: :ok }
+    end
   end
 
   # GET /imports/:import_history_id/download_original_file

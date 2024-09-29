@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  # redirect to imports#index
+  mount Rswag::Ui::Engine => "/api-docs"
+  mount Rswag::Api::Engine => "/api-docs"
+
   root to: redirect("/imports")
 
   get "imports", to: "imports#index", as: "imports_index"
