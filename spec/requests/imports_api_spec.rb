@@ -7,7 +7,7 @@ RSpec.describe "imports", type: :request do
       produces "application/json"
       description "Lists the import histories."
 
-      let(:import_histories) { create_list(:import_history, 3) }
+      let!(:import_histories) { create_list(:import_history, 3) }
 
       response(200, "List of the import histories returned successfully.") do
         schema type: :array, items: {"$ref" => "#/components/schemas/import_history"}
@@ -26,7 +26,16 @@ RSpec.describe "imports", type: :request do
           example.metadata[:response][:content] = content.deep_merge(example_spec)
         end
 
-        run_test!
+        run_test! do |response|
+          # Sort the import histories by :imported_at in descending order
+          decorated_import_histories = import_histories
+            .sort do |a, b|
+              b.imported_at <=> a.imported_at
+            end
+            .map(&:decorate)
+
+          expect(response.body).to eq(decorated_import_histories.to_json)
+        end
       end
     end
   end
@@ -34,7 +43,8 @@ RSpec.describe "imports", type: :request do
   path "/imports/{import_history_id}/properties" do
     parameter name: "import_history_id", in: :path, type: :string, description: "ID of the import history", required: true
 
-    let(:import_history_id) { create(:import_history, :with_properties).id }
+    let(:import_history) { create(:import_history, :with_properties) }
+    let(:import_history_id) { import_history.id }
 
     get("Lists the properties of an import history.") do
       tags "Imports"
@@ -62,7 +72,11 @@ RSpec.describe "imports", type: :request do
           example.metadata[:response][:content] = content.deep_merge(example_spec)
         end
 
-        run_test!
+        run_test! do
+          decorated_properties = import_history.properties.order(external_id: :asc).page(1).per(10).decorate
+
+          expect(response.body).to eq({total_count: decorated_properties.total_count, total_pages: decorated_properties.total_pages, properties: decorated_properties}.to_json)
+        end
       end
     end
   end
