@@ -15,6 +15,8 @@ module Imports
       @file = file
     end
 
+    # Uploads the file and enqueues a job to import the properties
+    # @return [Integer] the ID of the created import history
     def call
       raise InvalidFileFormatError unless @file.content_type == "text/csv"
       raise FileSizeExceededError if @file.size > MAX_FILE_SIZE
@@ -24,6 +26,8 @@ module Imports
         import_history.imported_file.attach(io: @file, filename: "#{import_history.id}.#{File.extname(@file.original_filename)}")
 
         ImportPropertiesJob.perform_later(import_history.id)
+
+        import_history.id
       end
     end
   end

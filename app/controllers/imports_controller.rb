@@ -34,14 +34,21 @@ class ImportsController < ApplicationController
     end
   end
 
+  # GET /imports/import_history.json
+  def import_history
+    @import_history = ImportHistory.find(params[:import_history_id]).decorate
+
+    render json: @import_history
+  end
+
   # POST /imports/upload
   # POST /imports/upload.json
   def upload
-    Imports::UploadService.call(file: params[:file])
+    import_history_id = Imports::UploadService.call(file: params[:file])
 
     respond_to do |format|
       format.html { redirect_to imports_index_path }
-      format.json { render json: {}, status: :ok }
+      format.json { render json: {import_history_id:}, status: :ok }
     end
   end
 
