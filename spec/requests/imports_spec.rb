@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Imports, type: :request do
   describe "GET /imports" do
-    let!(:import_histories) { create_list(:import_history, 3) }
+    let!(:import_histories) { create_list(:import_history, 3, import_status: :completed, import_failure_type: nil) }
 
     it "renders the index template" do
       get imports_index_path
