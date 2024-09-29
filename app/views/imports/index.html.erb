@@ -29,11 +29,11 @@
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= import_history.imported_at %></td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                   <span class="<%= "inline-flex items-center rounded-md bg-#{import_history.import_status_color}-50 px-2 py-1 text-xs font-medium text-#{import_history.import_status_color}-700 ring-1 ring-inset ring-#{import_history.import_status_color}-600/20" %>">
-                    <%= import_history.import_status %>
+                    <%= import_history.formatted_import_status %>
                   </span>
                 </td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  <span class="text-red-600"><%= import_history.import_failure_type %></span>
+                  <span class="text-red-600"><%= import_history.formatted_import_failure_type %></span>
                   <% if import_history.imported_file_with_errors.attached? %>
                     <div>
                       <%= link_to "Download error report", imports_download_error_file_path(import_history_id: import_history.id), class: "text-pink-600 hover:text-pink-900" %>

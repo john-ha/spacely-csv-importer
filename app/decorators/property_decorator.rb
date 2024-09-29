@@ -14,15 +14,15 @@ class PropertyDecorator < ApplicationDecorator
     [object.address, object.room_number].compact.join(" ")
   end
 
-  def area_square_meters
+  def formatted_area_square_meters
     "#{object.area_square_meters} m²" if object.area_square_meters.present?
   end
 
-  def rent
+  def formatted_rent
     "#{object.rent} 円" if object.rent.present?
   end
 
-  def property_type
+  def formatted_property_type
     object.property_type.humanize
   end
 end
