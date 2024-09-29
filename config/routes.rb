@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   # redirect to imports#index
-  root to: redirect("/imports/index")
+  root to: redirect("/imports")
 
-  get "imports/index"
+  get "imports", to: "imports#index", as: "imports_index"
   get "imports/new"
-  get "imports/:import_history_id", to: "imports#show", as: "imports_show"
+  get "imports/:import_history_id/properties", to: "imports#import_history_properties", as: "imports_import_history_properties"
   get "imports/:import_history_id/error_file", to: "imports#download_error_file", as: "imports_download_error_file"
   get "imports/:import_history_id/original_file", to: "imports#download_original_file", as: "imports_download_original_file"
 

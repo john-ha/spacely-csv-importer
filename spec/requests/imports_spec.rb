@@ -18,7 +18,7 @@ RSpec.describe Imports, type: :request do
           expect(response.body).to include(import_history.imported_properties_count.to_s)
           expect(response.body).to include(import_history.imported_at.to_s)
           expect(response.body).to include(import_history.import_status)
-          expect(response.body).to include(imports_show_path(import_history))
+          expect(response.body).to include(imports_import_history_properties_path(import_history))
         end
 
         expect(response.body).to include(imports_new_path)
@@ -60,12 +60,12 @@ RSpec.describe Imports, type: :request do
 
     context "when :format is :html" do
       it "renders the show template" do
-        get imports_show_path(import_history)
+        get imports_import_history_properties_path(import_history)
 
         expect(response).to have_http_status(:ok)
 
-        expect(response.body).to include("Properties of import ##{import_history.id} (#{import_history.imported_at})")
-        expect(response.body).to include("All the properties that have been imported.")
+        expect(response.body).to include("Properties of import ##{import_history.id} (#{import_history.imported_properties_count} properties)")
+        expect(response.body).to include("Imported on #{import_history.imported_at}.")
 
         import_history.properties.map(&:decorate).each do |property|
           expect(response.body).to include(property.external_id.to_s)
@@ -80,13 +80,12 @@ RSpec.describe Imports, type: :request do
 
     context "when :format is :json" do
       it "returns the import history and its properties" do
-        get imports_show_path(import_history), as: :json
+        get imports_import_history_properties_path(import_history), as: :json
 
-        decorated_import_history = import_history.decorate
-        decorated_properties = import_history.properties.sort_by(&:external_id).map(&:decorate)
+        decorated_properties = import_history.properties.order(external_id: :asc).page(1).per(10).decorate
 
         expect(response).to have_http_status(:ok)
-        expect(response.body).to eq({import_history: decorated_import_history, properties: decorated_properties}.to_json)
+        expect(response.body).to eq({total_count: decorated_properties.total_count, total_pages: decorated_properties.total_pages, properties: decorated_properties}.to_json)
       end
     end
   end
@@ -102,7 +101,7 @@ RSpec.describe Imports, type: :request do
     end
   end
 
-  describe "GET /imports/:import_history_id/download_original_file" do
+  describe "GET /imports/:import_history_id/original_file" do
     let(:import_history) { create(:import_history, imported_file: fixture_file_upload("valid_data.csv", "text/csv")) }
 
     it "downloads the original file" do
@@ -113,7 +112,7 @@ RSpec.describe Imports, type: :request do
     end
   end
 
-  describe "GET /imports/:import_history_id/download_error_file" do
+  describe "GET /imports/:import_history_id/error_file" do
     let(:import_history) { create(:import_history, imported_file_with_errors: fixture_file_upload("imported_file_with_errors.csv", "text/csv")) }
 
     it "downloads the error file" do

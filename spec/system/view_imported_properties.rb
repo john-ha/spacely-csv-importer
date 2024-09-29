@@ -23,7 +23,7 @@ RSpec.describe "ViewImportedProperties", type: :system do
 
     click_on "Show"
 
-    expect(page).to have_current_path(imports_show_path(import_history_id: import_history.id))
+    expect(page).to have_current_path(imports_import_history_properties_path(import_history_id: import_history.id))
     expect(page).to have_selector("#properties tbody tr", count: 3)
 
     import_history.properties.order(external_id: :asc).each_with_index do |property, index|

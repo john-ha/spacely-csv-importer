@@ -2,7 +2,10 @@ class ImportsController < ApplicationController
   # GET /imports
   # GET /imports.json
   def index
-    @import_histories = ImportHistory.all.order(imported_at: :desc).decorate
+    page = params[:page] || 1
+    per = params[:per] || 10
+
+    @import_histories = ImportHistory.all.order(imported_at: :desc).page(page).per(per).decorate
 
     respond_to do |format|
       format.html
@@ -14,15 +17,18 @@ class ImportsController < ApplicationController
   def new
   end
 
-  # GET /imports/:import_history_id
-  # GET /imports/:import_history_id.json
-  def show
+  # GET /imports/:import_history_id/properties
+  # GET /imports/:import_history_id/properties.json
+  def import_history_properties
+    page = params[:page] || 1
+    per = params[:per] || 10
+
     @import_history = ImportHistory.find(params[:import_history_id]).decorate
-    @properties = @import_history.properties.order(external_id: :asc).decorate
+    @properties = @import_history.properties.order(external_id: :asc).page(page).per(per).decorate
 
     respond_to do |format|
       format.html
-      format.json { render json: {import_history: @import_history, properties: @properties} }
+      format.json { render json: {total_count: @properties.total_count, total_pages: @properties.total_pages, properties: @properties} }
     end
   end
 
