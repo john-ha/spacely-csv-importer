@@ -41,7 +41,7 @@
                   <% end %>
                 </td>
                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                  <%= link_to "Show", imports_show_path(import_history_id: import_history.id), class: "text-pink-600 hover:text-pink-900" %>
+                  <%= link_to "Show", imports_import_history_properties_path(import_history_id: import_history.id), class: "text-pink-600 hover:text-pink-900" %>
                   <%= link_to "Original file", imports_download_original_file_path(import_history_id: import_history.id), class: "text-pink-600 hover:text-pink-900" %>
 
                 </td>
@@ -49,6 +49,10 @@
             <% end %>
           </tbody>
         </table>
+
+        <div class="flex justify-center mt-8">
+          <%= paginate @import_histories %>
+        </div>
       </div>
     </div>
   </div>

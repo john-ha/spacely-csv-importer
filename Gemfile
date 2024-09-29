@@ -63,6 +63,9 @@ gem "activerecord-import", "~> 1.8"
 # Use Amazon S3 for Active Storage [https://github.com/aws/aws-sdk-ruby]
 gem "aws-sdk-s3", "~> 1.166"
 
+# For pagination [https://github.com/kaminari/kaminari]
+gem "kaminari", "~> 1.2", ">= 1.2.2"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[mri mingw x64_mingw]

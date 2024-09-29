@@ -1,8 +1,8 @@
 <div class="px-4 sm:px-6 lg:px-8">
   <div class="sm:flex sm:items-center">
     <div class="sm:flex-auto">
-      <h1 class="text-base font-semibold leading-6 text-gray-900">Properties of import #<%= @import_history.id %> (<%= @import_history.imported_at %>)</h1>
-      <p class="mt-2 text-sm text-gray-700">All the properties that have been imported.</p>
+      <h1 class="text-base font-semibold leading-6 text-gray-900">Properties of import #<%= @import_history.id %> (<%= @import_history.imported_properties_count %> properties)</h1>
+      <p class="mt-2 text-sm text-gray-700">Imported on <%= @import_history.imported_at %>.</p>
     </div>
   </div>
   <div class="mt-8 flow-root">
@@ -32,6 +32,10 @@
             <% end %>
           </tbody>
         </table>
+
+        <div class="flex justify-center mt-8">
+          <%= paginate @properties %>
+        </div>
       </div>
     </div>
   </div>
