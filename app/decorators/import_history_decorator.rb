@@ -16,7 +16,7 @@ class ImportHistoryDecorator < ApplicationDecorator
   #     end
   #   end
 
-  def import_status
+  def formatted_import_status
     object.import_status.humanize
   end
 
@@ -24,7 +24,7 @@ class ImportHistoryDecorator < ApplicationDecorator
     IMPORT_STATUS_COLORS[object.import_status.to_sym]
   end
 
-  def import_failure_type
+  def formatted_import_failure_type
     object.import_failure_type&.humanize
   end
 end

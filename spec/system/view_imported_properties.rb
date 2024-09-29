@@ -32,7 +32,7 @@ RSpec.describe "ViewImportedProperties", type: :system do
       expect(page).to have_selector("#properties tbody tr:nth-child(#{index + 1}) td:nth-child(1)", text: decorated_property.external_id)
       expect(page).to have_selector("#properties tbody tr:nth-child(#{index + 1}) td:nth-child(2)", text: decorated_property.name)
       expect(page).to have_selector("#properties tbody tr:nth-child(#{index + 1}) td:nth-child(3)", text: decorated_property.full_address)
-      expect(page).to have_selector("#properties tbody tr:nth-child(#{index + 1}) td:nth-child(4)", text: decorated_property.area_square_meters)
+      expect(page).to have_selector("#properties tbody tr:nth-child(#{index + 1}) td:nth-child(4)", text: decorated_property.formatted_area_square_meters)
       expect(page).to have_selector("#properties tbody tr:nth-child(#{index + 1}) td:nth-child(5)", text: decorated_property.rent)
       expect(page).to have_selector("#properties tbody tr:nth-child(#{index + 1}) td:nth-child(6)", text: decorated_property.property_type)
     end

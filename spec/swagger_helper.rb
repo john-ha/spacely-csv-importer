@@ -30,14 +30,14 @@ RSpec.configure do |config|
               id: {type: :integer, required: true},
               import_status: {
                 type: :string,
-                enum: ["Started", "Completed", "Failed"],
+                enum: ["started", "completed", "failed"],
                 required: true
               },
               imported_properties_count: {type: :integer, required: true},
               imported_at: {type: :string, format: "date-time", required: true},
               import_failure_type: {
                 type: :string,
-                enum: ["Unknown error", "Invalid headers", "Invalid rows"]
+                enum: ["unknown_error", "invalid_rows", "invalid_headers"]
               },
               created_at: {type: :string, format: "date-time", required: true},
               updated_at: {type: :string, format: "date-time", required: true}
@@ -51,9 +51,9 @@ RSpec.configure do |config|
               name: {type: :string},
               address: {type: :string},
               room_number: {type: :string},
-              rent: {type: :string},
-              area_square_meters: {type: :string},
-              property_type: {type: :string, enum: ["Appartment", "House", "Mansion"]},
+              rent: {type: :integer},
+              area_square_meters: {type: :number},
+              property_type: {type: :string, enum: ["appartment", "house", "mansion"]},
               created_at: {type: :string, format: "date-time"},
               updated_at: {type: :string, format: "date-time"}
             }

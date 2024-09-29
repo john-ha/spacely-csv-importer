@@ -23,10 +23,10 @@ RSpec.describe PropertyDecorator, type: :decorator do
     end
   end
 
-  describe "#area_square_meters" do
+  describe "#formatted_area_square_meters" do
     let(:property) { create(:property, area_square_meters:) }
 
-    subject { property.decorate.area_square_meters }
+    subject { property.decorate.formatted_area_square_meters }
 
     context "when :area_square_meters is present" do
       let(:area_square_meters) { 12.34 }
@@ -41,10 +41,10 @@ RSpec.describe PropertyDecorator, type: :decorator do
     end
   end
 
-  describe "#rent" do
+  describe "#formatted_rent" do
     let(:property) { create(:property, rent:) }
 
-    subject { property.decorate.rent }
+    subject { property.decorate.formatted_rent }
 
     context "when :rent is present" do
       let(:rent) { 12345 }
@@ -59,10 +59,10 @@ RSpec.describe PropertyDecorator, type: :decorator do
     end
   end
 
-  describe "#property_type" do
+  describe "#formatted_property_type" do
     let(:property) { create(:property, property_type: Property.property_types.keys.sample) }
 
-    subject { property.decorate.property_type }
+    subject { property.decorate.formatted_property_type }
 
     it { is_expected.to eq(property.property_type.humanize) }
   end

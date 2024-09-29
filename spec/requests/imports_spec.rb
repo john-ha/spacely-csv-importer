@@ -16,7 +16,7 @@ RSpec.describe Imports, type: :request do
         expect(response.body).to include(import_history.id.to_s)
         expect(response.body).to include(import_history.imported_properties_count.to_s)
         expect(response.body).to include(import_history.imported_at.to_s)
-        expect(response.body).to include(import_history.import_status)
+        expect(response.body).to include(import_history.formatted_import_status)
         expect(response.body).to include(imports_import_history_properties_path(import_history))
       end
 
@@ -49,12 +49,12 @@ RSpec.describe Imports, type: :request do
       expect(response.body).to include("Imported on #{import_history.imported_at}.")
 
       import_history.properties.map(&:decorate).each do |property|
-        expect(response.body).to include(property.external_id.to_s)
+        expect(response.body).to include(property.external_id)
         expect(response.body).to include(property.name)
         expect(response.body).to include(property.full_address)
-        expect(response.body).to include(property.area_square_meters.to_s)
-        expect(response.body).to include(property.rent.to_s)
-        expect(response.body).to include(property.property_type)
+        expect(response.body).to include(property.formatted_area_square_meters)
+        expect(response.body).to include(property.formatted_rent)
+        expect(response.body).to include(property.formatted_property_type)
       end
     end
   end

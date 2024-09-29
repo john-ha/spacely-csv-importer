@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe ImportHistoryDecorator, type: :decorator do
-  describe "#import_status" do
+  describe "#formatted_import_status" do
     let(:import_history) { create(:import_history) }
 
-    subject { import_history.decorate.import_status }
+    subject { import_history.decorate.formatted_import_status }
 
     it { is_expected.to eq(import_history.import_status.humanize) }
   end
@@ -36,7 +36,7 @@ RSpec.describe ImportHistoryDecorator, type: :decorator do
   describe "#import_failure_type" do
     let(:import_history) { create(:import_history, import_failure_type:) }
 
-    subject { import_history.decorate.import_failure_type }
+    subject { import_history.decorate.formatted_import_failure_type }
 
     context "when :import_failure_type is present" do
       let(:import_failure_type) { :invalid_rows }
