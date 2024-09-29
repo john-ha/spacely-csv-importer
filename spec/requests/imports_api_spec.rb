@@ -40,6 +40,43 @@ RSpec.describe "imports", type: :request do
     end
   end
 
+  path "/imports/{import_history_id}" do
+    parameter name: "import_history_id", in: :path, type: :string, description: "ID of the import history", required: true
+
+    let(:import_history) { create(:import_history) }
+    let(:import_history_id) { import_history.id }
+
+    get("Shows the details of an import history.") do
+      tags "Imports"
+      produces "application/json"
+      description "Shows the details of an import history."
+
+      response(200, "Details of the import history returned successfully.") do
+        schema "$ref" => "#/components/schemas/import_history"
+
+        after do |example|
+          content = example.metadata[:response][:content] || {}
+          example_spec = {
+            "application/json" => {
+              examples: {
+                test_example: {
+                  value: JSON.parse(response.body, symbolize_names: true)
+                }
+              }
+            }
+          }
+          example.metadata[:response][:content] = content.deep_merge(example_spec)
+        end
+
+        run_test! do |response|
+          decorated_import_history = import_history.decorate
+
+          expect(response.body).to eq(decorated_import_history.to_json)
+        end
+      end
+    end
+  end
+
   path "/imports/{import_history_id}/properties" do
     parameter name: "import_history_id", in: :path, type: :string, description: "ID of the import history", required: true
 
@@ -72,7 +109,7 @@ RSpec.describe "imports", type: :request do
           example.metadata[:response][:content] = content.deep_merge(example_spec)
         end
 
-        run_test! do
+        run_test! do |response|
           decorated_properties = import_history.properties.order(external_id: :asc).page(1).per(10).decorate
 
           expect(response.body).to eq({total_count: decorated_properties.total_count, total_pages: decorated_properties.total_pages, properties: decorated_properties}.to_json)
@@ -116,7 +153,9 @@ RSpec.describe "imports", type: :request do
           example.metadata[:response][:content] = content.deep_merge(example_spec)
         end
 
-        run_test!
+        run_test! do |response|
+          expect(response.body).to eq({import_history_id: ImportHistory.last.id}.to_json)
+        end
       end
     end
   end

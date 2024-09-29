@@ -19,6 +19,26 @@ paths:
                 type: array
                 items:
                   "$ref": "#/components/schemas/import_history"
+  "/imports/{import_history_id}":
+    parameters:
+    - name: import_history_id
+      in: path
+      description: ID of the import history
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Shows the details of an import history.
+      tags:
+      - Imports
+      description: Shows the details of an import history.
+      responses:
+        '200':
+          description: Details of the import history returned successfully.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/import_history"
   "/imports/{import_history_id}/properties":
     parameters:
     - name: import_history_id
