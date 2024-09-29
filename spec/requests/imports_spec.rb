@@ -4,41 +4,23 @@ RSpec.describe Imports, type: :request do
   describe "GET /imports" do
     let!(:import_histories) { create_list(:import_history, 3) }
 
-    context "when :format is :html" do
-      it "renders the index template" do
-        get imports_index_path
+    it "renders the index template" do
+      get imports_index_path
 
-        expect(response).to have_http_status(:ok)
+      expect(response).to have_http_status(:ok)
 
-        expect(response.body).to include("Import History")
-        expect(response.body).to include("All the imports that have been done.")
+      expect(response.body).to include("Import History")
+      expect(response.body).to include("All the imports that have been done.")
 
-        import_histories.map(&:decorate).each do |import_history|
-          expect(response.body).to include(import_history.id.to_s)
-          expect(response.body).to include(import_history.imported_properties_count.to_s)
-          expect(response.body).to include(import_history.imported_at.to_s)
-          expect(response.body).to include(import_history.import_status)
-          expect(response.body).to include(imports_import_history_properties_path(import_history))
-        end
-
-        expect(response.body).to include(imports_new_path)
+      import_histories.map(&:decorate).each do |import_history|
+        expect(response.body).to include(import_history.id.to_s)
+        expect(response.body).to include(import_history.imported_properties_count.to_s)
+        expect(response.body).to include(import_history.imported_at.to_s)
+        expect(response.body).to include(import_history.import_status)
+        expect(response.body).to include(imports_import_history_properties_path(import_history))
       end
-    end
 
-    context "when :format is :json" do
-      it "returns a list of import histories" do
-        get imports_index_path, as: :json
-
-        # Sort the import histories by :imported_at in descending order
-        decorated_import_histories = import_histories
-          .sort do |a, b|
-            b.imported_at <=> a.imported_at
-          end
-          .map(&:decorate)
-
-        expect(response).to have_http_status(:ok)
-        expect(response.body).to eq(decorated_import_histories.to_json)
-      end
+      expect(response.body).to include(imports_new_path)
     end
   end
 
@@ -58,34 +40,21 @@ RSpec.describe Imports, type: :request do
   describe "GET /imports/:import_history_id/properties" do
     let(:import_history) { create(:import_history, :with_properties) }
 
-    context "when :format is :html" do
-      it "renders the show template" do
-        get imports_import_history_properties_path(import_history)
+    it "renders the show template" do
+      get imports_import_history_properties_path(import_history)
 
-        expect(response).to have_http_status(:ok)
+      expect(response).to have_http_status(:ok)
 
-        expect(response.body).to include("Properties of import ##{import_history.id} (#{import_history.imported_properties_count} properties)")
-        expect(response.body).to include("Imported on #{import_history.imported_at}.")
+      expect(response.body).to include("Properties of import ##{import_history.id} (#{import_history.imported_properties_count} properties)")
+      expect(response.body).to include("Imported on #{import_history.imported_at}.")
 
-        import_history.properties.map(&:decorate).each do |property|
-          expect(response.body).to include(property.external_id.to_s)
-          expect(response.body).to include(property.name)
-          expect(response.body).to include(property.full_address)
-          expect(response.body).to include(property.area_square_meters.to_s)
-          expect(response.body).to include(property.rent.to_s)
-          expect(response.body).to include(property.property_type)
-        end
-      end
-    end
-
-    context "when :format is :json" do
-      it "returns the import history and its properties" do
-        get imports_import_history_properties_path(import_history), as: :json
-
-        decorated_properties = import_history.properties.order(external_id: :asc).page(1).per(10).decorate
-
-        expect(response).to have_http_status(:ok)
-        expect(response.body).to eq({total_count: decorated_properties.total_count, total_pages: decorated_properties.total_pages, properties: decorated_properties}.to_json)
+      import_history.properties.map(&:decorate).each do |property|
+        expect(response.body).to include(property.external_id.to_s)
+        expect(response.body).to include(property.name)
+        expect(response.body).to include(property.full_address)
+        expect(response.body).to include(property.area_square_meters.to_s)
+        expect(response.body).to include(property.rent.to_s)
+        expect(response.body).to include(property.property_type)
       end
     end
   end

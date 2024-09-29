@@ -1,0 +1,159 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/imports":
+    get:
+      summary: Lists the import histories.
+      tags:
+      - Imports
+      description: Lists the import histories.
+      responses:
+        '200':
+          description: List of the import histories returned successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/import_history"
+  "/imports/{import_history_id}/properties":
+    parameters:
+    - name: import_history_id
+      in: path
+      description: ID of the import history
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Lists the properties of an import history.
+      tags:
+      - Imports
+      description: Lists the imported properties of an import history.
+      responses:
+        '200':
+          description: List of the properties returned successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_count:
+                    type: integer
+                    description: Total number of imported properties
+                    required: true
+                  total_pages:
+                    type: integer
+                    description: Total number of pages
+                    required: true
+                  properties:
+                    type: array
+                    items:
+                      "$ref": "#/components/schemas/property"
+                    description: List of imported properties
+                    required: true
+  "/imports/upload":
+    post:
+      summary: Upload a CSV file to import properties.
+      tags:
+      - Imports
+      description: Uploads a CSV file to import properties.
+      parameters: []
+      responses:
+        '200':
+          description: Upload performed successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: CSV file to upload
+                  required: true
+              required:
+              - file
+components:
+  schemas:
+    import_history:
+      type: object
+      properties:
+        id:
+          type: integer
+          required: true
+        import_status:
+          type: string
+          enum:
+          - Started
+          - Completed
+          - Failed
+          required: true
+        imported_properties_count:
+          type: integer
+          required: true
+        imported_at:
+          type: string
+          format: date-time
+          required: true
+        import_failure_type:
+          type: string
+          enum:
+          - Unknown error
+          - Invalid headers
+          - Invalid rows
+        created_at:
+          type: string
+          format: date-time
+          required: true
+        updated_at:
+          type: string
+          format: date-time
+          required: true
+    property:
+      type: object
+      properties:
+        id:
+          type: integer
+        external_id:
+          type: string
+        name:
+          type: string
+        address:
+          type: string
+        room_number:
+          type: string
+        rent:
+          type: string
+        area_square_meters:
+          type: string
+        property_type:
+          type: string
+          enum:
+          - Appartment
+          - House
+          - Mansion
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+servers:
+- url: "{protocol}://{defaultHost}"
+  variables:
+    protocol:
+      default: http
+      enum:
+      - https
+      - http
+    defaultHost:
+      default: www.example.com

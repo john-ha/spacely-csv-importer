@@ -33,10 +33,10 @@ RSpec.describe ImportHistoryDecorator, type: :decorator do
     end
   end
 
-  describe "#import_error_message" do
+  describe "#import_failure_type" do
     let(:import_history) { create(:import_history, import_failure_type:) }
 
-    subject { import_history.decorate.import_error_message }
+    subject { import_history.decorate.import_failure_type }
 
     context "when :import_failure_type is present" do
       let(:import_failure_type) { :invalid_rows }
