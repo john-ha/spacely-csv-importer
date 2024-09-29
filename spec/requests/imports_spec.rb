@@ -55,7 +55,7 @@ RSpec.describe Imports, type: :request do
     end
   end
 
-  describe "GET /imports/:import_history_id" do
+  describe "GET /imports/:import_history_id/properties" do
     let(:import_history) { create(:import_history, :with_properties) }
 
     context "when :format is :html" do
