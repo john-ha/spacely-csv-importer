@@ -102,6 +102,21 @@ paths:
                   required: true
               required:
               - file
+  "/properties":
+    get:
+      summary: Lists the properties.
+      tags:
+      - Properties
+      description: Lists the properties.
+      responses:
+        '200':
+          description: List of the properties returned successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/property"
 components:
   schemas:
     import_history:
@@ -113,9 +128,9 @@ components:
         import_status:
           type: string
           enum:
-          - Started
-          - Completed
-          - Failed
+          - started
+          - completed
+          - failed
           required: true
         imported_properties_count:
           type: integer
@@ -127,9 +142,9 @@ components:
         import_failure_type:
           type: string
           enum:
-          - Unknown error
-          - Invalid headers
-          - Invalid rows
+          - unknown_error
+          - invalid_rows
+          - invalid_headers
         created_at:
           type: string
           format: date-time
@@ -152,15 +167,15 @@ components:
         room_number:
           type: string
         rent:
-          type: string
+          type: integer
         area_square_meters:
-          type: string
+          type: number
         property_type:
           type: string
           enum:
-          - Appartment
-          - House
-          - Mansion
+          - appartment
+          - house
+          - mansion
         created_at:
           type: string
           format: date-time
