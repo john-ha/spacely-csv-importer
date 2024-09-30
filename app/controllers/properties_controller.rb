@@ -1,7 +1,12 @@
 class PropertiesController < ApplicationController
+  DEFAULT_PROPERTIES_PER_PAGE = 10
+
   def index
-    page = params[:page] || 1
-    per = params[:per] || 10
+    param!(:page, Integer, default: 1)
+    param!(:per, Integer, default: DEFAULT_PROPERTIES_PER_PAGE)
+
+    page = params[:page]
+    per = params[:per]
 
     @properties = Property.all.order(:external_id).page(page).per(per).decorate
 
