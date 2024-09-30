@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Properties", type: :request do
   describe "GET /properties" do
-    let!(:properties) { create_list(:property, 3) }
+    let!(:properties) { create_list(:property, 3).sort_by(&:external_id) }
 
     context "without any parameters" do
       it "renders the index template" do
@@ -53,7 +53,7 @@ RSpec.describe "Properties", type: :request do
 
     context "with :search parameter" do
       let!(:property) { properties.last }
-      let(:search) { property.name }
+      let(:search) { property.external_id }
 
       it "renders the index template with filtered properties" do
         get properties_index_path(search:)
