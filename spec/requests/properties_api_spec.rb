@@ -7,7 +7,17 @@ RSpec.describe "properties", type: :request do
       produces "application/json"
       description "Lists the properties."
 
+      parameter name: :page, in: :query, type: :integer, default: 1
+      parameter name: :per, in: :query, type: :integer, default: 10
+      parameter name: :search, in: :query, type: :string
+      parameter name: :property_type, in: :query, type: :string, enum: Property.property_types.keys
+
       let!(:properties) { create_list(:property, 3) }
+
+      let(:page) { 1 }
+      let(:per) { 10 }
+      let(:search) { nil }
+      let(:property_type) { nil }
 
       response(200, "List of the properties returned successfully.") do
         schema type: :array, items: {"$ref" => "#/components/schemas/property"}

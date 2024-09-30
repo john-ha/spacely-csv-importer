@@ -30,4 +30,17 @@ class Property < ApplicationRecord
   validates :name, presence: true
   validates :property_type, presence: true
   validates :room_number, presence: true, if: -> { property_type_appartment? || property_type_mansion? }
+  validates :area_square_meters, numericality: {greater_than: 0}, allow_nil: true
+  validates :rent, numericality: {greater_than: 0}, allow_nil: true
+
+  # Ransack configuration: allow only specific attributes to be searchable
+  # Reference: https://activerecord-hackery.github.io/ransack/going-further/other-notes/#authorization-allowlistingdenylisting
+  # @return [Array<String>]
+  def self.ransackable_attributes(auth_object = nil)
+    ["external_id", "name", "address", "room_number", "property_type"]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
 end
