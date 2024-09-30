@@ -73,7 +73,7 @@ gem "rswag", "~> 2.14", ">= 2.14.0"
 gem "prefixed_ids", "~> 1.7"
 
 # For validating parameters in Rails controllers [https://github.com/nicolasblanco/rails_param]
-gem 'rails_param', '~> 1.3', '>= 1.3.1'
+gem "rails_param", "~> 1.3", ">= 1.3.1"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
