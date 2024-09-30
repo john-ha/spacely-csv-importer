@@ -18,6 +18,8 @@
 #  index_properties_on_external_id  (external_id) UNIQUE
 #
 class Property < ApplicationRecord
+  has_prefix_id :prop
+
   enum :property_type, {appartment: 0, mansion: 1, house: 2}, prefix: true
 
   has_many :import_histories_properties, dependent: :destroy

@@ -147,6 +147,7 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    hashids (1.0.6)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
     importmap-rails (2.0.1)
@@ -219,6 +220,9 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.5.8)
+    prefixed_ids (1.8.1)
+      hashids (>= 1.0.0, < 2.0.0)
+      rails (>= 6.0.0)
     psych (5.1.2)
       stringio
     public_suffix (6.0.1)
@@ -426,6 +430,7 @@ DEPENDENCIES
   jbuilder
   kaminari (~> 1.2, >= 1.2.2)
   pg (~> 1.1)
+  prefixed_ids (~> 1.7)
   puma (~> 6.4, >= 6.4.3)
   rails (~> 7.2, >= 7.2.1)
   rspec-rails (~> 7.0.0)

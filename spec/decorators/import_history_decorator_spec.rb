@@ -1,6 +1,14 @@
 require "rails_helper"
 
 RSpec.describe ImportHistoryDecorator, type: :decorator do
+  describe "#id" do
+    let(:import_history) { create(:import_history) }
+
+    subject { import_history.decorate.id }
+
+    it { is_expected.to eq(import_history.prefix_id) }
+  end
+
   describe "#formatted_import_status" do
     let(:import_history) { create(:import_history) }
 

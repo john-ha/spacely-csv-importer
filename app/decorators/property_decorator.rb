@@ -10,6 +10,10 @@ class PropertyDecorator < ApplicationDecorator
   #     end
   #   end
 
+  def id
+    object.prefix_id
+  end
+
   def full_address
     [object.address, object.room_number].compact.join(" ")
   end
