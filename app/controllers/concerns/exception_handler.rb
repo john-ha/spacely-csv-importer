@@ -11,7 +11,7 @@ module ExceptionHandler
 
       respond_to do |format|
         format.html do
-          flash[:error] = e.message
+          flash[:error] = "An error occurred."
           redirect_to root_path
         end
 
@@ -24,16 +24,37 @@ module ExceptionHandler
     end
 
     rescue_from ActiveRecord::RecordNotFound do |e|
+      Rails.logger.warn("[ActiveRecord::RecordNotFound] #{e.message}.")
+      Rails.logger.warn("[ActiveRecord::RecordNotFound] #{e.backtrace.join("\n")}.")
+
       respond_to do |format|
         format.html do
-          flash[:error] = e.message
+          flash[:error] = "Record not found."
           redirect_to root_path
         end
 
         format.json do
           render json: {
-            errors: [e.message]
+            errors: ["Record not found."]
           }, status: :not_found
+        end
+      end
+    end
+
+    rescue_from RailsParam::InvalidParameterError do |e|
+      Rails.logger.warn("[RailsParam::InvalidParameterError] #{e.message}.")
+      Rails.logger.warn("[RailsParam::InvalidParameterError] #{e.backtrace.join("\n")}.")
+
+      respond_to do |format|
+        format.html do
+          flash[:error] = "Invalid parameter."
+          redirect_to root_path
+        end
+
+        format.json do
+          render json: {
+            errors: []
+          }, status: :bad_request
         end
       end
     end

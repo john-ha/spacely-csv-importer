@@ -13,7 +13,7 @@ RSpec.describe "ExceptionHandler" do
         get imports_index_path
 
         expect(response).to redirect_to(root_path)
-        expect(flash[:error]).to eq("StandardError")
+        expect(flash[:error]).to eq("An error occurred.")
       end
     end
 
@@ -35,7 +35,7 @@ RSpec.describe "ExceptionHandler" do
         get imports_import_history_properties_path(import_history_id: 0)
 
         expect(response).to redirect_to(root_path)
-        expect(flash[:error]).to eq("Couldn't find ImportHistory with 'id'=0")
+        expect(flash[:error]).to eq("Record not found.")
       end
     end
 
@@ -45,7 +45,29 @@ RSpec.describe "ExceptionHandler" do
 
         expect(response).to have_http_status(:not_found)
         expect(response.body).to eq({
-          errors: ["Couldn't find ImportHistory with 'id'=0"]
+          errors: ["Record not found."]
+        }.to_json)
+      end
+    end
+  end
+
+  describe "rescue_from RailsParam::InvalidParameterError" do
+    context "when :format is :html" do
+      it "redirects to root_path" do
+        get imports_import_history_properties_path(import_history_id: 1, page: "invalid")
+
+        expect(response).to redirect_to(root_path)
+        expect(flash[:error]).to eq("Invalid parameter.")
+      end
+    end
+
+    context "when :format is :json" do
+      it "returns a :bad_request" do
+        get imports_import_history_properties_path(import_history_id: 1, page: "invalid"), as: :json
+
+        expect(response).to have_http_status(:bad_request)
+        expect(response.body).to eq({
+          errors: []
         }.to_json)
       end
     end
