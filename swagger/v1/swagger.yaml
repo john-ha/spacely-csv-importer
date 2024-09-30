@@ -123,7 +123,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           required: true
         import_status:
           type: string
@@ -157,7 +157,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
         external_id:
           type: string
         name:

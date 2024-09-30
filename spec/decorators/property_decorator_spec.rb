@@ -1,6 +1,14 @@
 require "rails_helper"
 
 RSpec.describe PropertyDecorator, type: :decorator do
+  describe "#id" do
+    let(:property) { create(:property) }
+
+    subject { property.decorate.id }
+
+    it { is_expected.to eq(property.prefix_id) }
+  end
+
   describe "#full_address" do
     let(:property) { create(:property, address:, property_type: :house, room_number:) }
 

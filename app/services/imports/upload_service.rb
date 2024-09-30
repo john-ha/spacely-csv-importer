@@ -27,7 +27,7 @@ module Imports
 
         ImportPropertiesJob.perform_later(import_history.id)
 
-        import_history.id
+        import_history
       end
     end
   end

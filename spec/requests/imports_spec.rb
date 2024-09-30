@@ -13,7 +13,7 @@ RSpec.describe Imports, type: :request do
       expect(response.body).to include("All the imports that have been done.")
 
       import_histories.map(&:decorate).each do |import_history|
-        expect(response.body).to include(import_history.id.to_s)
+        expect(response.body).to include(import_history.prefix_id.to_s)
         expect(response.body).to include(import_history.imported_properties_count.to_s)
         expect(response.body).to include(import_history.imported_at.to_s)
         expect(response.body).to include(import_history.formatted_import_status)
@@ -45,7 +45,7 @@ RSpec.describe Imports, type: :request do
 
       expect(response).to have_http_status(:ok)
 
-      expect(response.body).to include("Properties of import ##{import_history.id} (#{import_history.imported_properties_count} properties)")
+      expect(response.body).to include("Properties of import ##{import_history.prefix_id} (#{import_history.imported_properties_count} properties)")
       expect(response.body).to include("Imported on #{import_history.imported_at}.")
 
       import_history.properties.map(&:decorate).each do |property|
@@ -74,10 +74,14 @@ RSpec.describe Imports, type: :request do
     let(:import_history) { create(:import_history, imported_file: fixture_file_upload("valid_data.csv", "text/csv")) }
 
     it "downloads the original file" do
-      get imports_download_original_file_path(import_history)
+      decorated_import_history = import_history.decorate
+
+      get imports_download_original_file_path(decorated_import_history)
 
       expect(response).to have_http_status(:ok)
-      expect(response.body).to eq(import_history.imported_file.download)
+      expect(response.body).to eq(decorated_import_history.imported_file.download)
+
+      expect(response.headers["Content-Disposition"]).to include("import_#{decorated_import_history.id}.csv")
     end
   end
 
@@ -85,10 +89,14 @@ RSpec.describe Imports, type: :request do
     let(:import_history) { create(:import_history, imported_file_with_errors: fixture_file_upload("imported_file_with_errors.csv", "text/csv")) }
 
     it "downloads the error file" do
-      get imports_download_error_file_path(import_history)
+      decorated_import_history = import_history.decorate
+
+      get imports_download_error_file_path(decorated_import_history)
 
       expect(response).to have_http_status(:ok)
-      expect(response.body).to eq(import_history.imported_file_with_errors.download)
+      expect(response.body).to eq(decorated_import_history.imported_file_with_errors.download)
+
+      expect(response.headers["Content-Disposition"]).to include("import_errors_#{decorated_import_history.id}.csv")
     end
   end
 end

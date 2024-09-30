@@ -27,7 +27,7 @@ RSpec.configure do |config|
           import_history: {
             type: "object",
             properties: {
-              id: {type: :integer, required: true},
+              id: {type: :string, required: true},
               import_status: {
                 type: :string,
                 enum: ["started", "completed", "failed"],
@@ -46,7 +46,7 @@ RSpec.configure do |config|
           property: {
             type: "object",
             properties: {
-              id: {type: :integer},
+              id: {type: :string},
               external_id: {type: :string},
               name: {type: :string},
               address: {type: :string},

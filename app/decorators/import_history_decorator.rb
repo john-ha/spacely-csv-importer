@@ -16,6 +16,10 @@ class ImportHistoryDecorator < ApplicationDecorator
   #     end
   #   end
 
+  def id
+    object.prefix_id
+  end
+
   def formatted_import_status
     object.import_status.humanize
   end

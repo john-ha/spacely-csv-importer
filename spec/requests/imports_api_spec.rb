@@ -81,7 +81,7 @@ RSpec.describe "imports", type: :request do
     parameter name: "import_history_id", in: :path, type: :string, description: "ID of the import history", required: true
 
     let(:import_history) { create(:import_history, :with_properties) }
-    let(:import_history_id) { import_history.id }
+    let(:import_history_id) { import_history.prefix_id }
 
     get("Lists the properties of an import history.") do
       tags "Imports"
@@ -154,7 +154,8 @@ RSpec.describe "imports", type: :request do
         end
 
         run_test! do |response|
-          expect(response.body).to eq({import_history_id: ImportHistory.last.id}.to_json)
+          decorated_import_history = ImportHistory.last.decorate
+          expect(response.body).to eq(decorated_import_history.as_json(only: :id).to_json)
         end
       end
     end
