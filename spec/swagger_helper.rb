@@ -69,7 +69,7 @@ RSpec.configure do |config|
               enum: ["https", "http"]
             },
             defaultHost: {
-              default: "www.example.com"
+              default: ENV["HOST"] || "localhost:3000"
             }
           }
         }

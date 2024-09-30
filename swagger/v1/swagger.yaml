@@ -108,6 +108,30 @@ paths:
       tags:
       - Properties
       description: Lists the properties.
+      parameters:
+      - name: page
+        in: query
+        default: 1
+        schema:
+          type: integer
+      - name: per
+        in: query
+        default: 10
+        schema:
+          type: integer
+      - name: search
+        in: query
+        schema:
+          type: string
+      - name: property_type
+        in: query
+        enum:
+        - appartment
+        - mansion
+        - house
+        schema:
+          type: string
+        description: ":\n * `appartment` \n * `mansion` \n * `house` \n "
       responses:
         '200':
           description: List of the properties returned successfully.
@@ -191,4 +215,4 @@ servers:
       - https
       - http
     defaultHost:
-      default: www.example.com
+      default: localhost:3000

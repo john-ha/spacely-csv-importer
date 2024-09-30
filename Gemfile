@@ -75,6 +75,9 @@ gem "prefixed_ids", "~> 1.7"
 # For validating parameters in Rails controllers [https://github.com/nicolasblanco/rails_param]
 gem "rails_param", "~> 1.3", ">= 1.3.1"
 
+# For allowing search functionality on models [https://github.com/activerecord-hackery/ransack]
+gem "ransack", "~> 4.2", ">= 4.2.1"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[mri mingw x64_mingw]
