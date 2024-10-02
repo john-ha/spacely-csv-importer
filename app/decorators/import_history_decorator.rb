@@ -2,7 +2,8 @@ class ImportHistoryDecorator < ApplicationDecorator
   delegate_all
 
   IMPORT_STATUS_COLORS = {
-    started: "blue",
+    enqueued: "blue",
+    started: "orange",
     completed: "green",
     failed: "red"
   }.freeze

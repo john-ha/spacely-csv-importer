@@ -26,7 +26,7 @@ module Imports
 
       import_history = nil
       ActiveRecord::Base.transaction do
-        import_history = ImportHistory.create!(import_status: :started, imported_at: Time.zone.now)
+        import_history = ImportHistory.create!(import_status: :enqueued, imported_at: Time.zone.now)
         import_history.imported_file.attach(io: @file, filename: "#{import_history.id}.#{File.extname(@file.original_filename)}")
       end
 

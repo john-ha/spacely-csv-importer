@@ -30,7 +30,7 @@ RSpec.configure do |config|
               id: {type: :string, required: true},
               import_status: {
                 type: :string,
-                enum: ["started", "completed", "failed"],
+                enum: ["enqueued", "started", "completed", "failed"],
                 required: true
               },
               imported_properties_count: {type: :integer, required: true},

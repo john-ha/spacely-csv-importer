@@ -50,8 +50,6 @@ module Imports
     # Parse the CSV file and import the properties
     # @return [void]
     def call
-      return unless @import_history.import_status_started?
-
       ActiveRecord::Base.transaction do
         @import_history.imported_file.open do |file|
           raise InvalidCsvHeadersError unless CSV.open(file, headers: true).first.headers.sort == HEADERS.keys.sort

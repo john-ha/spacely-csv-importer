@@ -12,6 +12,10 @@ class ImportPropertiesJob < ApplicationJob
   def perform(import_history_id)
     import_history = ImportHistory.find(import_history_id)
 
+    return unless import_history.import_status_enqueued?
+
+    import_history.update!(import_status: :started)
+
     Imports::ParseCsvService.call(import_history:)
   end
 end
