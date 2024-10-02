@@ -35,11 +35,16 @@ module Imports
       "一戸建て" => :house
     }
 
+    BATCH_SIZE = 2000
+
     # Initialize the service with the import history
     # @param [ImportHistory] import_history | The import history containing the CSV file to be parsed and imported
     # @return [void]
     def initialize(import_history:)
       @import_history = import_history
+      @properties = []
+      @failed_instances = []
+      @properties_count = 0
     end
 
     # Parse the CSV file and import the properties
@@ -49,16 +54,14 @@ module Imports
 
       ActiveRecord::Base.transaction do
         @import_history.imported_file.open do |file|
-          properties = []
-
           raise InvalidCsvHeadersError unless CSV.open(file, headers: true).first.headers.sort == HEADERS.keys.sort
 
-          ################################
-          #### 1. Properties creation ####
-          ################################
+          ##########################################################
+          #### 1. Properties & ImportHistoryProperties creation ####
+          ##########################################################
 
-          CSV.foreach(file, headers: true, header_converters: lambda { |header| HEADERS[header] }) do |row|
-            properties << Property.new(
+          CSV.foreach(file, headers: true, header_converters: lambda { |header| HEADERS[header] }).with_index do |row, index|
+            @properties << Property.new(
               external_id: row[:external_id],
               name: row[:name],
               address: row[:address],
@@ -67,38 +70,26 @@ module Imports
               area_square_meters: row[:area_square_meters],
               property_type: PROPERTY_TYPES_MAPPING[row[:property_type]]
             )
+
+            import_properties if @properties.size >= BATCH_SIZE
           end
 
-          import = Property.import(
-            properties,
-            on_duplicate_key_update: {conflict_target: [:external_id], columns: :all},
-            all_or_none: true,
-            validate: true,
-            recursive: true
-          )
+          # Import the remaining properties of the last batch
+          import_properties if @properties.any?
 
-          raise InvalidCsvRowsError.new(import.failed_instances) if import.failed_instances.any?
-
-          #############################################
-          #### 2. ImportHistoriesProperty creation ####
-          #############################################
-
-          import_histories_properties = []
-          import.ids.map do |id|
-            import_histories_properties << ImportHistoriesProperty.new(property_id: id, import_history_id: @import_history.id)
-          end
-
-          ImportHistoriesProperty.import!(import_histories_properties, on_duplicate_key_ignore: true, all_or_none: true)
+          raise InvalidCsvRowsError.new(@failed_instances) if @failed_instances.any?
 
           ###############################################
-          #### 3. `imported_properties_count` update ####
+          #### 2. `imported_properties_count` update ####
           ###############################################
 
-          @import_history.update!(imported_properties_count: import.ids.size)
+          @import_history.update!(imported_properties_count: @properties_count)
         end
       end
 
       @import_history.update!(import_status: :completed)
+
+      Rails.logger.info("[Imports::ParseCsvService] Completed.")
     rescue InvalidCsvHeadersError
       @import_history.update!(import_status: :failed, import_failure_type: :invalid_headers)
     rescue InvalidCsvRowsError => e
@@ -110,6 +101,33 @@ module Imports
     end
 
     private
+
+    # Import the properties and the import histories properties
+    # @return [void]
+    def import_properties
+      import = Property.import(
+        @properties,
+        on_duplicate_key_update: {conflict_target: [:external_id], columns: :all},
+        all_or_none: true,
+        validate: true,
+        recursive: true
+      )
+
+      @failed_instances += import.failed_instances
+
+      # If there are failed instances, do not even try to create the ImportHistoriesProperty records
+      # We still want to continue parsing the CSV file to get all the possible failed instances and output them in the error CSV
+      unless @failed_instances.any?
+        import_histories_properties = import.ids.map do |id|
+          ImportHistoriesProperty.new(property_id: id, import_history_id: @import_history.id)
+        end
+
+        ImportHistoriesProperty.import!(import_histories_properties, on_duplicate_key_ignore: true, all_or_none: true)
+      end
+
+      @properties = []
+      @properties_count += import.ids.size
+    end
 
     # Create a CSV file with the rows that failed to be imported and attach it to the import history
     # @param [Array<Property>] invalid_properties | The properties that failed to be imported
