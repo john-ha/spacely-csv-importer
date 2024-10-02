@@ -16,7 +16,7 @@ RSpec.describe Imports::UploadService, type: :service do
 
         import_history = ImportHistory.last
 
-        expect(import_history.import_status).to eq("started")
+        expect(import_history.import_status).to eq("enqueued")
         expect(import_history.imported_at).to be_within(1.second).of(Time.zone.now)
         expect(import_history.imported_file).to be_attached
 
