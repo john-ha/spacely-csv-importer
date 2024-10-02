@@ -4,6 +4,8 @@ require "csv"
 class ImportPropertiesJob < ApplicationJob
   queue_as :default
 
+  retry_on ActiveStorage::FileNotFoundError, wait: 5.seconds, attempts: 3
+
   # Import properties from a CSV file
   # @param [Integer] import_history_id | The ID of the import history
   # @return [void]
