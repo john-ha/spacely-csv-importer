@@ -6,6 +6,7 @@ export default class extends Controller {
 
   connect() { this.#resetInput() }
 
+  // This method is called when the user selects a file from the file input
   onInputChange() {
     if (this.inputTarget.files.length === 0) {
       this.#resetInput()
@@ -22,6 +23,11 @@ export default class extends Controller {
     }
   }
 
+  /******************
+   * Private methods
+   ******************/
+
+  // Reset the input field and show the placeholder text
   #resetInput() {
     this.inputTarget.value = ""
     this.filenameTarget.textContent = ""
@@ -29,12 +35,14 @@ export default class extends Controller {
     this.submitTarget.disabled = true
   }
 
+  // Show the name and size of the selected file
   #showFilename() {
     this.placeholderTarget.classList.add("hidden")
     this.filenameTarget.textContent = `${this.inputTarget.files[0].name} (${this.#bytesToMegaBytes(this.inputTarget.files[0].size)} MB)`
     this.submitTarget.disabled = false
   }
 
+  // Convert bytes to megabytes
   #bytesToMegaBytes(bytes) {
     return (bytes / 1024 / 1024).toFixed(2)
   }

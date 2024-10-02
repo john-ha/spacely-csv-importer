@@ -1,5 +1,7 @@
 require "csv"
 
+# Description: This service is responsible for parsing a CSV file
+# and importing the properties into the database.
 module Imports
   class ParseCsvService
     include Callable
@@ -40,6 +42,8 @@ module Imports
       @import_history = import_history
     end
 
+    # Parse the CSV file and import the properties
+    # @return [void]
     def call
       return unless @import_history.import_status_started?
 

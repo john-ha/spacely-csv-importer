@@ -1,3 +1,6 @@
+# Description: this service is responsible for uploading a file,
+# attaching it to an import history,
+# and enqueuing a job to import the properties.
 module Imports
   class UploadService
     include Callable

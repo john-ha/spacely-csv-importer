@@ -1,6 +1,8 @@
 class PropertiesController < ApplicationController
   DEFAULT_PROPERTIES_PER_PAGE = 10
 
+  # GET /properties
+  # GET /properties.json
   def index
     param!(:page, Integer, default: 1)
     param!(:per, Integer, default: DEFAULT_PROPERTIES_PER_PAGE)
