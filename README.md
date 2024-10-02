@@ -49,6 +49,18 @@ CSVファイルから物件情報をデータベースに登録するWeb APIの�
 よろしくお願いいたします。
 ```
 
+## ⏰ Time
+
+| Day | Time
+| --- | ---
+| 金曜日 (9月27日) | 5 hours
+| 土曜日 (9月28日) | 5 hours
+| 日曜日 (9月29日) | 4 hours
+| 月曜日 (9月30日) | 2 hours
+| 水曜日 (10月2日) | 1 hour
+|  |
+| Total | 17 hours
+
 ## 📝 Tested versions
 
 - Ruby 3.3
