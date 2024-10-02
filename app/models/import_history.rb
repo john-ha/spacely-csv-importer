@@ -4,7 +4,7 @@
 #
 #  id                        :bigint           not null, primary key
 #  import_failure_type       :integer
-#  import_status             :integer          default("started"), not null
+#  import_status             :integer          default("enqueued"), not null
 #  imported_at               :datetime         not null
 #  imported_properties_count :integer          default(0), not null
 #  created_at                :datetime         not null
@@ -13,7 +13,7 @@
 class ImportHistory < ApplicationRecord
   has_prefix_id :imp
 
-  enum :import_status, {started: 0, completed: 1, failed: 2}, prefix: true
+  enum :import_status, {enqueued: 0, started: 1, completed: 2, failed: 3}, prefix: true
   enum :import_failure_type, {unknown_error: 0, invalid_headers: 1, invalid_rows: 2}, prefix: true
 
   has_many :import_histories_properties, dependent: :destroy

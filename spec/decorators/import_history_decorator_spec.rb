@@ -22,10 +22,16 @@ RSpec.describe ImportHistoryDecorator, type: :decorator do
 
     subject { import_history.decorate.import_status_color }
 
+    context "when :import_status is :enqueued" do
+      let(:import_status) { :enqueued }
+
+      it { is_expected.to eq "blue" }
+    end
+
     context "when :import_status is :started" do
       let(:import_status) { :started }
 
-      it { is_expected.to eq "blue" }
+      it { is_expected.to eq "orange" }
     end
 
     context "when :import_status is :completed" do

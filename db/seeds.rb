@@ -11,6 +11,7 @@ require "factory_bot_rails"
 properties = FactoryBot.create_list(:property, 10)
 
 completed_import_histories = FactoryBot.create_list(:import_history, 3, import_status: :completed)
+_enqueued_import_histories = FactoryBot.create_list(:import_history, 4, import_status: :enqueued)
 _started_import_histories = FactoryBot.create_list(:import_history, 5, import_status: :started)
 _failed_import_histories = FactoryBot.create_list(:import_history, 2, import_status: :failed)
 

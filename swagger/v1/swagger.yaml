@@ -152,6 +152,7 @@ components:
         import_status:
           type: string
           enum:
+          - enqueued
           - started
           - completed
           - failed

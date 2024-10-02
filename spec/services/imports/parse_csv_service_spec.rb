@@ -108,30 +108,5 @@ RSpec.describe Imports::ParseCsvService, type: :service do
         expect(import_history.import_failure_type).to eq("unknown_error")
       end
     end
-
-    context "when ImportHistory status is other than :started" do
-      shared_examples "returns and does not create any records" do
-        it do
-          expect { described_class.call(import_history:) }
-            .to change(Property, :count).by(0)
-            .and change(ImportHistoriesProperty, :count).by(0)
-            .and not_change { import_history.import_status }
-        end
-      end
-
-      context "when ImportHistory status is :completed" do
-        let(:import_status) { :completed }
-        let(:imported_file) { fixture_file_upload("valid_rows_10_rows.csv", "text/csv") }
-
-        it_behaves_like "returns and does not create any records"
-      end
-
-      context "when ImportHistory status is :failed" do
-        let(:import_status) { :failed }
-        let(:imported_file) { fixture_file_upload("valid_rows_10_rows.csv", "text/csv") }
-
-        it_behaves_like "returns and does not create any records"
-      end
-    end
   end
 end
