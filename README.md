@@ -206,16 +206,14 @@ There are several types of errors that can occur during the import process:
 ### How well does the application handle large CSV files?
 
 - I am using the `csv` gem to parse the CSV file and using `CSV.foreach` to read the file line by line. This method is memory efficient because it reads the file line by line and does not load the entire file into memory.
-- After parsing the CSV file, the properties are imported in bulk using the `activerecord-import` gem.
+- While parsing the CSV file, the properties are imported in bulk using the `activerecord-import` gem by batch of 2000 records to avoid memory over consumption (see https://github.com/tonystrawberry/spacely-csv-importer/blob/main/app/services/imports/parse_csv_service.rb#L74)
 - To prevent potential timeout errors, the import job is processed in the background using the `solid_queue` gem (in this app, for simplicity purposes, the background jobs are run in the same process as the web server but in a real production environment, the jobs should be run in a separate process/container).
+- As a note, since the production environment is running on starter tier, we are limiting the concurrency of the CSV parsing job to 1 to avoid any excessive memory consumption and ensure it remains within the allowed limits of Render.
 
 Below are some performance tests I did with the biggest file size of 200,000 rows (found in `spec/fixtures/files/valid_rows_200000_rows.csv`):
 
 ```
-[CSV.foreach] 6.600595 seconds to parse CSV
-[Property.import] 42.96588 seconds to import properties
-[ImportHistoriesProperty.import] 17.811072 seconds to import import_histories_properties
-[BenchmarkCsvImport] Time: 67.82 seconds
+[BenchmarkCsvImport] Time: 51.82 seconds
 ```
 
-As we can see, importing 200,000 rows takes around 67 seconds and most of the time is spent on importing the properties. Indeed, we are performing validations on each row and it takes time.
+As we can see, importing 200,000 rows takes around 52 seconds. Performing validations while importing the properties is the tasks that is taking the most time.
