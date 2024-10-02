@@ -53,7 +53,7 @@ CSVファイルから物件情報をデータベースに登録するWeb APIの�
 
 - Ruby 3.3
 - Rails 7.2
-- PostgreSQL 14.1
+- PostgreSQL 14.13
 
 ## 🚀 Getting Started
 

@@ -78,6 +78,13 @@ gem "rails_param", "~> 1.3", ">= 1.3.1"
 # For allowing search functionality on models [https://github.com/activerecord-hackery/ransack]
 gem "ransack", "~> 4.2", ">= 4.2.1"
 
+# Used by `standard` gem but since it will no longer be part of the default gems starting from 3.5.0, we add it manually just in case
+# ```
+# 21:52:06 css.1  | /Users/tony_duong/.rvm/gems/ruby-3.3.5/gems/rswag-ui-2.14.0/lib/rswag/ui/configuration.rb:1: warning: /Users/tony_duong/.rvm/rubies/ruby-3.3.5/lib/ruby/3.3.0/ostruct.rb was loaded from the standard library, but will no longer be part of the default gems starting from Ruby 3.5.0.
+# 21:52:06 css.1  | You can add ostruct to your Gemfile or gemspec to silence this warning.
+# ```
+gem "ostruct", "~> 0.6.0"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[mri mingw x64_mingw]
