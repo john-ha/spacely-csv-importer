@@ -2,6 +2,8 @@ require "csv"
 
 # Description: This job is responsible for importing properties from a CSV file.
 class ImportPropertiesJob < ApplicationJob
+  limits_concurrency to: 1, key: "import_properties_job", duration: 1.minute
+
   queue_as :default
 
   # Import properties from a CSV file
