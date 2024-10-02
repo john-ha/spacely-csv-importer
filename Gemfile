@@ -85,6 +85,9 @@ gem "ransack", "~> 4.2", ">= 4.2.1"
 # ```
 gem "ostruct", "~> 0.6.0"
 
+# For reading and writing CSV [https://github.com/ruby/csv]
+gem "csv", "~> 3.3"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[mri mingw x64_mingw]
@@ -117,6 +120,9 @@ group :development do
 
   # Unconfigurable linter and formatter for Ruby code [https://github.com/standardrb/standard]
   gem "standard", "~> 1.40"
+
+  # For benchmarking memory usage [https://github.com/michaelherold/benchmark-memory]
+  gem "benchmark-memory"
 end
 
 group :test do
