@@ -60,7 +60,7 @@ RSpec.describe Imports, type: :request do
   end
 
   describe "POST /imports/upload" do
-    let(:file) { fixture_file_upload("valid_data.csv", "text/csv") }
+    let(:file) { fixture_file_upload("valid_rows_10_rows.csv", "text/csv") }
 
     it "redirects to the imports index page" do
       post imports_upload_path, params: {file:}
@@ -71,7 +71,7 @@ RSpec.describe Imports, type: :request do
   end
 
   describe "GET /imports/:import_history_id/original_file" do
-    let(:import_history) { create(:import_history, imported_file: fixture_file_upload("valid_data.csv", "text/csv")) }
+    let(:import_history) { create(:import_history, imported_file: fixture_file_upload("valid_rows_10_rows.csv", "text/csv")) }
 
     it "downloads the original file" do
       decorated_import_history = import_history.decorate

@@ -13,7 +13,7 @@ RSpec.describe "ImportProperties", type: :system do
     click_on "Import properties"
 
     expect(page).to have_current_path(imports_new_path)
-    attach_file("file", Rails.root.join("spec", "fixtures", "files", "valid_data.csv"))
+    attach_file("file", Rails.root.join("spec", "fixtures", "files", "valid_rows_10_rows.csv"))
 
     click_on "Import"
 

@@ -6,7 +6,7 @@ module Imports
 
     class FileSizeExceededError < StandardError; end
 
-    MAX_FILE_SIZE = 10.megabytes.freeze
+    MAX_FILE_SIZE = 20.megabytes.freeze
 
     # Initialize the service with the file to be uploaded
     # @param [ActionDispatch::Http::UploadedFile] file

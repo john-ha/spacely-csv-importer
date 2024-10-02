@@ -6,7 +6,7 @@ RSpec.describe Imports::ParseCsvService, type: :service do
 
     context "when the file contains only valid data" do
       let(:import_status) { :started }
-      let(:imported_file) { fixture_file_upload("valid_data.csv", "text/csv") }
+      let(:imported_file) { fixture_file_upload("valid_rows_10_rows.csv", "text/csv") }
 
       it "creates Properties" do
         expect { described_class.call(import_history: import_history) }.to change(Property, :count).by(10)
@@ -58,7 +58,7 @@ RSpec.describe Imports::ParseCsvService, type: :service do
 
     context "when the file contains invalid data" do
       let(:import_status) { :started }
-      let(:imported_file) { fixture_file_upload("invalid_rows_data.csv", "text/csv") }
+      let(:imported_file) { fixture_file_upload("invalid_rows_10_rows.csv", "text/csv") }
 
       it "updates ImportHistory status to :failed" do
         expect { described_class.call(import_history:) }
@@ -75,7 +75,7 @@ RSpec.describe Imports::ParseCsvService, type: :service do
 
     context "when the file contains invalid headers" do
       let(:import_status) { :started }
-      let(:imported_file) { fixture_file_upload("invalid_headers_data.csv", "text/csv") }
+      let(:imported_file) { fixture_file_upload("invalid_headers.csv", "text/csv") }
 
       it "updates ImportHistory status to :failed" do
         expect { described_class.call(import_history:) }
@@ -91,7 +91,7 @@ RSpec.describe Imports::ParseCsvService, type: :service do
 
     context "when an unexpected error occurs" do
       let(:import_status) { :started }
-      let(:imported_file) { fixture_file_upload("valid_data.csv", "text/csv") }
+      let(:imported_file) { fixture_file_upload("valid_rows_10_rows.csv", "text/csv") }
 
       before do
         allow(CSV).to receive(:open).and_raise(StandardError)
@@ -121,14 +121,14 @@ RSpec.describe Imports::ParseCsvService, type: :service do
 
       context "when ImportHistory status is :completed" do
         let(:import_status) { :completed }
-        let(:imported_file) { fixture_file_upload("valid_data.csv", "text/csv") }
+        let(:imported_file) { fixture_file_upload("valid_rows_10_rows.csv", "text/csv") }
 
         it_behaves_like "returns and does not create any records"
       end
 
       context "when ImportHistory status is :failed" do
         let(:import_status) { :failed }
-        let(:imported_file) { fixture_file_upload("valid_data.csv", "text/csv") }
+        let(:imported_file) { fixture_file_upload("valid_rows_10_rows.csv", "text/csv") }
 
         it_behaves_like "returns and does not create any records"
       end

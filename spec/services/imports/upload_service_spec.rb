@@ -7,7 +7,7 @@ RSpec.describe Imports::UploadService, type: :service do
     end
 
     context "when the file is valid" do
-      let(:file) { fixture_file_upload("valid_data.csv", "text/csv") }
+      let(:file) { fixture_file_upload("valid_rows_10_rows.csv", "text/csv") }
 
       it "creates an ImportHistory and enqueues the ImportPropertiesJob job" do
         expect { described_class.call(file:) }
@@ -36,7 +36,7 @@ RSpec.describe Imports::UploadService, type: :service do
     end
 
     context "when the file size exceeds the maximum allowed" do
-      let(:file) { fixture_file_upload("large_data.csv", "text/csv") }
+      let(:file) { fixture_file_upload("invalid_size.csv", "text/csv") }
 
       it "raises a FileSizeExceededError" do
         expect { described_class.call(file:) }

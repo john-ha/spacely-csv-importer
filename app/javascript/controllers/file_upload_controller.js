@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 
+const FILE_SIZE_LIMIT = 20
 export default class extends Controller {
   static targets = [ "input", "filename", "placeholder", "submit" ]
 
@@ -9,10 +10,10 @@ export default class extends Controller {
     if (this.inputTarget.files.length === 0) {
       this.#resetInput()
     } else {
-      const filesize = this.#bytesToMegaBytes(this.inputTarget.files[0].size)
+      const fileSize = this.#bytesToMegaBytes(this.inputTarget.files[0].size)
 
-      if (filesize > 10) {
-        alert("File size must be less than 10 MB")
+      if (fileSize > FILE_SIZE_LIMIT) {
+        alert("File size must be less than 20 MB")
         this.#resetInput()
         return
       }

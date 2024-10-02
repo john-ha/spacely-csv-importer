@@ -6,7 +6,7 @@ RSpec.describe "ViewImportedProperties", type: :system do
       :with_properties,
       import_status: :completed,
       import_failure_type: nil,
-      imported_file: fixture_file_upload("valid_data.csv", "text/csv"))
+      imported_file: fixture_file_upload("valid_rows_10_rows.csv", "text/csv"))
   }
   let(:decorated_import_history) { import_history.decorate }
 
