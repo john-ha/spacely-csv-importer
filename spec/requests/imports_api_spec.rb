@@ -134,7 +134,7 @@ RSpec.describe "imports", type: :request do
         required: ["file"]
       }
 
-      let(:"") { {file: fixture_file_upload("valid_data.csv", "text/csv")} }
+      let(:"") { {file: fixture_file_upload("valid_rows_10_rows.csv", "text/csv")} }
 
       response(200, "Upload performed successfully.") do
         schema type: :object, properties: {}

@@ -13,7 +13,11 @@ class ImportsController < ApplicationController
     page = params[:page]
     per = params[:per]
 
-    @import_histories = ImportHistory.all.order(imported_at: :desc).page(page).per(per).decorate
+    @import_histories = ImportHistory
+      .all
+      .with_attached_imported_file
+      .with_attached_imported_file_with_errors
+      .order(imported_at: :desc).page(page).per(per).decorate
 
     respond_to do |format|
       format.html

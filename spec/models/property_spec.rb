@@ -34,8 +34,8 @@ RSpec.describe Property, type: :model do
     it { should validate_presence_of(:external_id) }
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:property_type) }
-    it { should validate_numericality_of(:area_square_meters).is_greater_than(0).allow_nil }
-    it { should validate_numericality_of(:rent).is_greater_than(0).allow_nil }
+    it { should validate_numericality_of(:area_square_meters).is_greater_than_or_equal_to(0) }
+    it { should validate_numericality_of(:rent).is_greater_than_or_equal_to(0) }
 
     it { create(:property, property_type: :appartment).should validate_presence_of(:room_number) }
     it { create(:property, property_type: :mansion).should validate_presence_of(:room_number) }

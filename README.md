@@ -131,6 +131,9 @@ Below are some resources that I referred to while working on this project:
 - Render documentation for learning how to deploy Ruby on Rails applications:
   - https://docs.render.com/deploy-rails
 
+- Avoid N+1 queries in Rails for ActiveStorage:
+  - https://shuttodev.hatenablog.com/entry/2019/09/10/012916
+
 - Of course, I also used Github Copilot for writing code faster and ChatGPT for providing me syntax of Rails methods or giving me suggestions on how to improve the code quality.
 
 - Gems documentation. This project gave me the opportunity to explore some new gems that I haven't used before:
@@ -186,3 +189,21 @@ There are several types of errors that can occur during the import process:
 ![Error report](/docs/images/error-report.png)
 
 - In case of any other errors, the import job will fail with a `Unknown error` error. Ideally, the error should be logged and notified through a bug tracking system.
+
+
+### How well does the application handle large CSV files?
+
+- I am using the `csv` gem to parse the CSV file and using `CSV.foreach` to read the file line by line. This method is memory efficient because it reads the file line by line and does not load the entire file into memory.
+- After parsing the CSV file, the properties are imported in bulk using the `activerecord-import` gem.
+- To prevent potential timeout errors, the import job is processed in the background using the `solid_queue` gem (in this app, for simplicity purposes, the background jobs are run in the same process as the web server but in a real production environment, the jobs should be run in a separate process/container).
+
+Below are some performance tests I did with the biggest file size of 200,000 rows (found in `spec/fixtures/files/valid_rows_200000_rows.csv`):
+
+```
+[CSV.foreach] 6.600595 seconds to parse CSV
+[Property.import] 42.96588 seconds to import properties
+[ImportHistoriesProperty.import] 17.811072 seconds to import import_histories_properties
+[BenchmarkCsvImport] Time: 67.82 seconds
+```
+
+As we can see, importing 200,000 rows takes around 67 seconds and most of the time is spent on importing the properties. Indeed, we are performing validations on each row and it takes time.
